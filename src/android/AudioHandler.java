@@ -479,6 +479,8 @@ public class AudioHandler extends CordovaPlugin {
     public void setVolume(String id, float volume) {
         String TAG3 = "AudioHandler.setVolume(): Error : ";
 
+        this.systemVolumeMax();
+
         AudioPlayer audio = this.players.get(id);
         if (audio != null) {
             audio.setVolume(volume);
@@ -564,5 +566,10 @@ public class AudioHandler extends CordovaPlugin {
             return (audio.getCurrentAmplitude());
         }
         return 0;
+    }
+
+    protected void systemVolumeMax(){
+      AudioManager am = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);;
+      am.setStreamVolume(AudioManager.STREAM_MUSIC, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
     }
 }
