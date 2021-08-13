@@ -571,6 +571,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
      * @param volume
      */
     public void setVolume(float volume) {
+        this.systemVolumeMax();
         if (this.player != null) {
             this.player.setVolume(volume, volume);
         } else {
@@ -757,4 +758,10 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
         }
         return 0;
     }
+
+    protected void systemVolumeMax(){
+      AudioManager am = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);;
+      am.setStreamVolume(AudioManager.STREAM_MUSIC, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+    }
+
 }

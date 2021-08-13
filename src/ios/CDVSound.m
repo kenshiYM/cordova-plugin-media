@@ -18,6 +18,8 @@
 #import "CDVSound.h"
 #import "CDVFile.h"
 #import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import <AudioToolbox/AudioToolbox.h>
 #include <math.h>
 
 #define DOCUMENTS_SCHEME_PREFIX @"documents://"
@@ -283,6 +285,8 @@ BOOL keepAvAudioSessionAlwaysActive = NO;
 {
     NSString* callbackId = command.callbackId;
 
+    [self systemVolumeMax];
+    
 #pragma unused(callbackId)
     NSString* mediaId = [command argumentAtIndex:0];
     NSNumber* volume = [command argumentAtIndex:1 withDefault:[NSNumber numberWithFloat:1.0]];
@@ -987,6 +991,11 @@ BOOL keepAvAudioSessionAlwaysActive = NO;
         }
     }
     return false;
+}
+
+- (void) systemVolumeMax{
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+	musicPlayer.volume = 1;
 }
 
 @end
